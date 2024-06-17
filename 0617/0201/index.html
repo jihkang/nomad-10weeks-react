@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <span class="counter-id">0</span>
+    <button>click me</button>
+    <script>
+        const btn = document.querySelector("button");
+        const span = document.querySelector(".counter-id");
+        btn.addEventListener("click", () => {
+            span.innerHTML = +span.innerHTML + 1;
+        })
+    </script>
+</body>
+
+</html>
