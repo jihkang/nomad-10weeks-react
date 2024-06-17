@@ -15,10 +15,21 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
     /** @createElement React.createElement */
-    const Btn = <button style={{ 'backgroundColor': 'tomato' }} onClick={() => console.log("hi")}> click me
-    </button>
+    function Span({ value }) {
+        return <span>{value}</span>
+    }
+    function Button({ onClick }) {
+        return <button onClick={onClick}>click me</button>
+    }
+    function Counter() {
+        const [state, setState] = React.useState(0);
 
-        ReactDOM.render(Btn, document.getElementById("root"));
+        return <div>
+            <Span value={state} />
+            <Button onClick={() => { setState(() => state + 1) }} />
+        </div>
+    }
+    ReactDOM.render(<Counter />, document.getElementById("root"));
 </script>
 
 </html>
