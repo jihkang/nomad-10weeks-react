@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css"
+    />
+    <style>
+      body {
+        padding: 20px;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function calculate(obj) {
+      const { first, second, op } = obj;
+
+      if (op === "-") {
+        return first - second;
+      }
+      if (op === "+") {
+        return first + second;
+      }
+      if (op === "/") {
+        if (second === 0) {
+          console.log("cannot divide with zero");
+          throw Error("cannot divide with zero");
+        }
+        return first / second;
+      }
+      if (op === "*") {
+        return first * second;
+      }
+    }
+
+    function Input({ name, onChange, ...rest }) {
+      return <input type="text" name={name} onChange={onChange} {...rest} />;
+    }
+
+    function App() {
+      const [state, setState] = React.useState({
+        first: 0,
+        second: 0,
+        op: ""
+      });
+      const [result, setResult] = React.useState();
+      const onChange = (e) => {
+        if ((+e.currentTarget.value).toString() === "NaN") {
+          return;
+        }
+        const { value, name } = e.currentTarget;
+        if (!value) {
+          return;
+        }
+        setState((prev) => ({
+          ...prev,
+          [name]: +value
+        }));
+      };
+
+      return (
+        <div className="container">
+          <h1>🔥 Calculator 🔥</h1>
+          <Input
+            name="first"
+            onChange={onChange}
+            placeholder="write a number"
+            required={true}
+          />
+          <Input
+            name="second"
+            onChange={onChange}
+            placeholder="write another number"
+            required={true}
+          />
+          <select
+            onChange={(e) => {
+              if (e.target.value === "") {
+                return;
+              }
+              setState((prev) => ({ ...prev, op: e.target.value }));
+            }}
+            required
+          >
+            <option disabled selected>
+              -> select operation
+            </option>
+            <option value="-">-</option>
+            <option value="+">+</option>
+            <option value="/">/</option>
+            <option value="*">*</option>
+          </select>
+          <button
+            onClick={() => {
+              setResult(calculate(state));
+            }}
+          >
+            Calculate
+          </button>
+          <h2>{result && `result: ${Math.round(result)}`} </h2>
+        </div>
+      );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+  </script>
+</html>

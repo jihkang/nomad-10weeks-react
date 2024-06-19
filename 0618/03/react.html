@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    /** @createElement React.createElement */
+    function Span({ value }) {
+        return <span>{value}</span>
+    }
+    function Button({ onClick }) {
+        return <button onClick={onClick}>click me</button>
+    }
+    function Counter() {
+        const [state, setState] = React.useState(0);
+
+        return <div>
+            <Span value={state} />
+            <Button onClick={() => { setState(() => state + 1) }} />
+        </div>
+    }
+
+    function test() {
+        let state = undefiend;
+
+        function setState(callback) {
+            if (typeof callback === 'function') {
+                Object.call(callback, this);
+            }
+        }
+        return [state, setState]
+    }
+    ReactDOM.render(<Counter />, document.getElementById("root"));
+</script>
+
+</html>
